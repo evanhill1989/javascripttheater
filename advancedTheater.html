@@ -1,0 +1,63 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway+Dots&family=Raleway:wght@200;400;500;600;800;900&family=Teko:wght@700&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    
+</head>
+
+<body>
+    <nav class="movie-nav">
+       <ul>
+                
+                <li><a href="#">Now Showing</a></li>
+                <li><a href="#">Coming Soon</a></li>
+                <li><a href="#">Special Events</a></li>
+                <li><a href="#">Movie Club</a></li>
+
+       </ul>
+    </nav>
+    <main>
+        <div class="hero">
+            <h1 class="hero-title">JavaScript Theater</h1>
+        </div>
+        <div class="ticket-container">
+            <div class="ticket-card">
+                <h2 class="ticket-title">Ticket Finder</h2>
+                <form class="ticket-form">
+                    <label for="movie-dropdown">Choose a Movie:</label>
+                    <select id="movie-dropdown" name="movie">
+                        <option value="movie1" selected>The Exorcist</option>
+                        <option value="movie2">Dumb Money</option>
+                        <option value="movie3">Barbie</option>
+                        <!-- Add more movie options as needed -->
+                    </select>
+        
+                    <label for="time-dropdown">Choose a Showtime:</label>
+                    <select id="time-dropdown" name="showtime">
+                        <!-- I need a placeholder value to start" -->
+
+                       
+                        
+                        <!-- Didn't create functionality of dropdown 2 depending on dropdown 1 choice  -->
+                    </select>
+                    <div class="age-check">
+                        <input type="checkbox" id="age-discount" name="age-discount" >
+                        <label for="age-discount">Kids & Senior Discount</label> <br>
+                        <label for="age-discount">(Under 12 or Over 65. ID required.)</label>
+                        
+                    </div>
+                    
+                    <button type="submit" id="buy-ticket-btn">Buy Ticket</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
