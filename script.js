@@ -11,43 +11,57 @@ const timeDropdown = document.getElementById("time-dropdown");
 updateShowtimes();
 //convert timeDropdown.value to 24 hour time 
 function convertTo24HourFormat(time) {
-    // Split the time string into hours and minutes
-    const [hour, minute] = time.split(':').map(Number);
+    // Split the time string into hours, minutes, and AM/PM (if present)
+    const timeParts = time.split(' ');
+    const [timePart, ampm] = timeParts;
+    const [hour, minute] = timePart.split(':').map(Number);
 
-    // Determine whether it's AM or PM based on your time logic
-    // For example, if hours are 1 to 11, it's AM, otherwise PM
-    const isAM = hour >= 1 && hour <= 11;
+    // Determine whether it's AM or PM based on the presence of AM/PM information
+    const isPM = ampm && ampm.toLowerCase() === 'pm';
+
+    // Create a variable to hold the converted hour
+    let convertedHour = hour;
 
     // If it's PM and not already 12:00 PM, add 12 hours to the hour
-    if (!isAM && hour !== 12) {
-        hour += 12;
+    if (isPM && hour !== 12) {
+        convertedHour += 12;
+    } else if (!isPM && hour === 12) {
+        // If it's 12 AM, set converted hour to 0 in 24-hour format
+        convertedHour = 0;
     }
 
     // Convert the hour and minute back to a string
-    const hourStr = hour.toString().padStart(2, '0'); // Ensure 2-digit format
+    const hourStr = convertedHour.toString().padStart(2, '0'); // Ensure 2-digit format
     const minuteStr = minute.toString().padStart(2, '0');
 
     // Return the time in 24-hour format as a string
     return `${hourStr}:${minuteStr}`;
 }
 
-console.log(convertTo24HourFormat('9:30 AM'));
-console.log(timeDropdown.value);
 
-addEventListener
+
+
+
+console.log(convertTo24HourFormat('9:32 AM'));
+console.log(convertTo24HourFormat(timeDropdown.value));
+
+
 
 function matineeDiscount(){
     const matineeDiscount = 3;
+    let timeStamp = convertTo24HourFormat(timeDropdown.value);
+    // Just want the first two digits of the time stamp
+    timeStamp = timeStamp.slice(0,2);
    
    
 
-    if(timeDropdown.value === "9:30 AM"){
+    if(timeStamp < 18){
         return matineeDiscount;
     } else return 0;
 
 }
 
-matineeDiscount();
+
 
 // console.log(timeDropdown).value;
 
@@ -91,18 +105,24 @@ function updateShowtimeData(){
 
 // Event listener for the "Buy Ticket" button
 const buyTicketButton = document.getElementById("buy-ticket-btn");
+const ageCheckbox = document.getElementById("age-discount");
+
+
 buyTicketButton.addEventListener("click", () => {
     console.log("buyTicketButton clicked");
    // Get the selected movie and showtime
     const selectedMovie = movieDropdown.value;
     const selectedShowtime = timeDropdown.value;
-   
+
+let ageDiscount = 0;
+if(ageCheckbox.checked){ ageDiscount = 10;}
 const paymentCard = document.createElement("div");
     
 paymentCard.className = "ticket-card";
 paymentCard.id = "payment-card";
 console.log("buyTicketButton clicked");
-const totalPrice = 20;
+
+const totalPrice = 20 - matineeDiscount() - ageDiscount;
 paymentCard.innerHTML = `
     <h2 class="ticket-title">Payment Details</h2>
     <p>Total Price: <span id="total-price">$${totalPrice}</span></p>
@@ -124,8 +144,9 @@ const currentCard = document.querySelector(".ticket-card");
 
 
 ticketContainer.replaceChild(paymentCard, currentCard);
-    // Calculate the total price (you can use your own pricing logic)
+    // 
     // const totalPrice = calculateTotalPrice(selectedMovie, selectedShowtime);
+
     
   
     console.log("buyTicketButton clicked");
